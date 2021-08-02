@@ -1,0 +1,25 @@
+{
+  "name": "status-page",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "ts-node src/main.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^16.4.10",
+    "ts-node": "^10.1.0",
+    "typescript": "^4.3.5"
+  },
+  "dependencies": {
+    "@kubernetes/client-node": "^0.15.0",
+    "fastify": "^3.19.2",
+    "fastify-static": "^4.2.2",
+    "point-of-view": "^4.15.1",
+    "twig": "^1.15.4"
+  }
+}
