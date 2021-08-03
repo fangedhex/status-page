@@ -17,13 +17,14 @@ server.register(fastifyStatic, {
   root: path.join(__dirname, "../public"),
 });
 
-server.get('/', async (request, reply) => {
+server.get('/', (_, reply) => {
   getServices().then((services) => {
     let groups = Array.from(services).reduce((groups, [key, value]) => (
       Object.assign(groups, { [key]: value }) // Be careful! Maps can have non-String keys; object literals can't.
     ), {});
 
     reply.view('/views/layout.html.twig', {groups});
+    logger.info("Sending services page to user ...");
   }).catch(logger.error);
 });
 
