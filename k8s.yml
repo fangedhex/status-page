@@ -1,0 +1,95 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: status-page
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  namespace: status-page
+  name: status-page
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: status-page
+  name: status-page
+rules:
+- apiGroups: [""] # "" indicates the core API group
+  resources: ["endpoints"]
+  verbs: ["get", "watch", "list"]
+---
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1beta1
+metadata:
+  name: status-page
+  namespace: status-page
+subjects:
+  - kind: ServiceAccount
+    name: status-page
+    namespace: status-page
+roleRef:
+  kind: Role
+  name: status-page
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: status-page
+  namespace: status-page
+  labels:
+    app: status-page
+spec:
+  selector:
+    matchLabels:
+      app: status-page
+  template:
+    metadata:
+      labels:
+        app: status-page
+    spec:
+      serviceAccountName: status-page
+      containers:
+        - name: status-page
+          image: ghcr.io/fangedhex/status-page:latest
+          imagePullPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: status-page
+  namespace: status-page
+spec:
+  selector:
+    app: status-page
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: status-page
+  namespace: status-page
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+spec:
+  tls:
+    - hosts:
+        - status.fhex.dev
+      secretName: fhex-dev-tls
+  rules:
+    - host: "status.fhex.dev"
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: status-page
+                port:
+                  number: 8080
+

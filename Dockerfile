@@ -5,3 +5,4 @@ WORKDIR /app
 ADD . .
 RUN pnpm install
 CMD ["pnpm", "dev"]
+EXPOSE 8080

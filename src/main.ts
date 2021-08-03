@@ -29,7 +29,7 @@ server.get('/', async (request, reply) => {
   reply.view('/views/layout.html.twig', {groups});
 })
 
-server.listen(3000, function (err, address) {
+server.listen(8080, function (err, address) {
   if (err) {
     server.log.error(err)
     process.exit(1)

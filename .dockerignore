@@ -44,3 +44,4 @@ yarn.lock
 .github
 .editorconfig
 .gitignore
+k8s.yml
