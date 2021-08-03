@@ -20,6 +20,7 @@
     "fastify": "^3.19.2",
     "fastify-static": "^4.2.2",
     "point-of-view": "^4.15.1",
+    "tslog": "^3.2.0",
     "twig": "^1.15.4"
   }
 }
