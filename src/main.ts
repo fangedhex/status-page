@@ -6,7 +6,7 @@ import { getServices } from "./services";
 
 // Require the framework and instantiate it
 const server = fastify({
-  //logger: true
+  logger: true
 })
 
 server.register(pointOfView, {
